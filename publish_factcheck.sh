@@ -18,6 +18,10 @@ SAFE_SLUG="$(echo "$SLUG" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9-' '-')"
 DEST_NAME="$DATE-$SAFE_SLUG.html"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEST="$ROOT_DIR/reports/$DEST_NAME"
+if [[ -f "$DEST" ]]; then
+  DEST_NAME="$DATE-$SAFE_SLUG-$(date +%H%M%S).html"
+  DEST="$ROOT_DIR/reports/$DEST_NAME"
+fi
 
 cp "$SRC" "$DEST"
 "$ROOT_DIR/generate_index.sh"
