@@ -1,24 +1,28 @@
-# FutureIQ Factcheck Pages
+# FutureIQ Factchecks
 
-Static GitHub Pages site for publishing fact-check HTML reports with stable URLs.
+Self-contained repo for generating and publishing linked-claim fact-check reports.
+
+## Generate fact-check report
+
+```bash
+python3 tools/factcheck_links.py --input /path/to/outline.md --slug topic-name --title "Fact Check: Topic"
+```
+
+Outputs:
+- `reports/YYYY-MM-DD-topic-name.html`
+- `reports/YYYY-MM-DD-topic-name.json`
+
+## Publish to GitHub Pages
+
+```bash
+./publish_factcheck.sh reports/YYYY-MM-DD-topic-name.html topic-name
+```
 
 ## URL design
 - Immutable reports: `/reports/YYYY-MM-DD-slug.html`
 - Latest redirect page: `/latest/index.html`
 - Index: `/`
 
-## One-command publish
-From this repo:
-
-```bash
-./publish_factcheck.sh /path/to/generated_report.html optional-slug
-```
-
-Example:
-
-```bash
-./publish_factcheck.sh ../drone_outline_factcheck.html drone-applications
-```
-
 ## Custom domain
-Set repository Pages custom domain to `facts.futureiq.smritiweb.com` and keep `CNAME` file in repo.
+- Domain: `facts.futureiq.smritiweb.com`
+- CNAME target: `ngkabra.github.io`
