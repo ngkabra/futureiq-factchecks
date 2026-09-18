@@ -14,7 +14,11 @@ fi
 
 SLUG="${2:-factcheck}"
 DATE="$(date +%F)"
-SAFE_SLUG="$(echo "$SLUG" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9-' '-')"
+SAFE_SLUG="$(printf '%s' "$SLUG" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9-' '-' | sed 's/^-*//; s/-*$//')"
+if [[ -z "$SAFE_SLUG" ]]; then
+  echo "Slug reduced to empty after sanitising: $SLUG"
+  exit 1
+fi
 DEST_NAME="$DATE-$SAFE_SLUG.html"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEST="$ROOT_DIR/reports/$DEST_NAME"
